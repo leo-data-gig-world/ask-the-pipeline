@@ -1,0 +1,21 @@
+# Create the Slack app from this manifest: api.slack.com/apps -> Create New App -> From a manifest.
+# Least privilege: the bot can only see messages that mention it, and post replies.
+display_information:
+  name: pricebot
+  description: Answers questions about Pokemon card prices from the warehouse, with the SQL it used.
+features:
+  bot_user:
+    display_name: pricebot
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - app_mentions:read
+      - chat:write
+settings:
+  event_subscriptions:
+    bot_events:
+      - app_mention
+  socket_mode_enabled: true
+  org_deploy_enabled: false
+  token_rotation_enabled: false

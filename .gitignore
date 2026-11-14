@@ -1,0 +1,9 @@
+.venv/
+.cache/
+.env
+logs/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+evals/fixture.duckdb
+*.tmp

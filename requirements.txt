@@ -1,0 +1,4 @@
+duckdb==2.0.0
+openai>=3.51,<4
+slack-bolt==1.30.0
+pyyaml>=6
