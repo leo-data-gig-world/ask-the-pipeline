@@ -1,0 +1,66 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_1637251fe67901686a00faf1",
+          "name": "data_freshness",
+          "arguments": "{}"
+        },
+        {
+          "id": "call_f5b10cc1639e15a44c1e494f",
+          "name": "list_models",
+          "arguments": "{}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 507,
+        "completion_tokens": 58
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_5af95a2c19a04e01ac3ab4e4",
+          "name": "run_sql",
+          "arguments": "{\"query\": \"SELECT card_name, source, variant, price, previous_day_price, day_over_day_change_pct FROM price_spikes WHERE price_date = '2026-11-10'\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 747,
+        "completion_tokens": 46
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_4d765985e4814b4e80838316",
+          "name": "run_sql",
+          "arguments": "{\"query\": \"SELECT * FROM price_spikes WHERE price_date = '2026-11-10'\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 881,
+        "completion_tokens": 29
+      }
+    },
+    {
+      "content": "**Umbreon ex** (sv08.5, holofoil) spiked on 2026-11-10: its TCGplayer market price hit **USD 1,500.00**, up 50% day-over-day, roughly 56 standard deviations above its trailing 7-day average (~USD 998.57).\n\nThat's the only card flagged as spiking on the latest date.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 1048,
+        "completion_tokens": 89
+      }
+    }
+  ],
+  "sql_run": [
+    "SELECT * FROM price_spikes WHERE price_date = '2026-11-10'"
+  ],
+  "results_digest": "659010baa7d5",
+  "answer": "**Umbreon ex** (sv08.5, holofoil) spiked on 2026-11-10: its TCGplayer market price hit **USD 1,500.00**, up 50% day-over-day, roughly 56 standard deviations above its trailing 7-day average (~USD 998.57).\n\nThat's the only card flagged as spiking on the latest date.",
+  "ms": 5234
+}

@@ -1,6 +1,7 @@
 # Eval cases run against evals/fixture.duckdb (latest date 2026-11-10).
 # Checks are case-insensitive:
-#   all:  every string must appear in the answer
+#   all:  every string must appear in the answer (a nested list = any one of them)
+#   numbers are compared without thousand separators (1,500 == 1500)
 #   any:  at least one must appear
 #   none: none may appear
 #   sql:  true = at least one query must have run; false = none may run
@@ -22,7 +23,7 @@
 
 - id: no_currency_mixing
   question: What is the total market value of Umbreon ex across both marketplaces on the latest date?
-  all: [EUR, USD]
+  all: [[EUR, "€"], [USD, "$"]]
   none: ["2370", "2,370"]
 
 - id: missing_day

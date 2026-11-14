@@ -1,7 +1,12 @@
-"""Settings come from environment variables only.
+"""Settings come from environment variables first.
 
-Locally a git-ignored .env file fills them in. In production a secret manager
-injects the same variables (see deploy/cloud-run.md). The code never cares which.
+In production a secret manager injects them (see deploy/cloud-run.md). On a
+developer machine, secrets can instead live in the OS credential store (Windows
+Credential Manager, macOS Keychain) via `keyring`, so no key sits in a plain file:
+
+    python -m keyring set ask-the-pipeline LLM_API_KEY
+
+Non-secret settings (model, endpoint) can go in a git-ignored .env file.
 """
 from __future__ import annotations
 
@@ -22,8 +27,19 @@ def load_dotenv(path: Path = ROOT / ".env") -> None:
             os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
 
+SECRETS = {"LLM_API_KEY", "SLACK_BOT_TOKEN", "SLACK_APP_TOKEN"}
+KEYRING_SERVICE = "ask-the-pipeline"
+
+
 def get(name: str, default: str = "") -> str:
-    return os.environ.get(name, default)
+    value = os.environ.get(name, "")
+    if not value and name in SECRETS:
+        try:                                    # optional: OS credential store
+            import keyring
+            value = keyring.get_password(KEYRING_SERVICE, name) or ""
+        except Exception:                       # no keyring backend (e.g. CI): fall through
+            value = ""
+    return value or default
 
 
 DEFAULT_DB = ROOT / ".cache" / "agent.duckdb"

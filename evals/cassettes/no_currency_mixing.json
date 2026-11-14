@@ -1,0 +1,66 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_0046a95d95b84bb1b13763e5",
+          "name": "list_models",
+          "arguments": "{}"
+        },
+        {
+          "id": "call_47c1a040df4648b19e8a768a",
+          "name": "data_freshness",
+          "arguments": "{}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 515,
+        "completion_tokens": 41
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_f98a5594456c408e915d5853",
+          "name": "describe_model",
+          "arguments": "{\"name\": \"fct_daily_prices\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 755,
+        "completion_tokens": 15
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_22a008b6c7074854961c0229",
+          "name": "run_sql",
+          "arguments": "{\"query\": \"SELECT source, currency, SUM(market) AS total_market, COUNT(*) AS rows\\nFROM fct_daily_prices\\nWHERE price_date = '2026-11-10' AND card_name ILIKE '%Umbreon ex%'\\nGROUP BY source, currency\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1693,
+        "completion_tokens": 63
+      }
+    },
+    {
+      "content": "On the latest date (2026-11-10), Umbreon ex has a total market value of **\u20ac870.00 on Cardmarket** and **$1,500.00 on TCGplayer** (one variant each).\n\nNote: these are different currencies, so they can't be added into a single combined figure.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 1830,
+        "completion_tokens": 70
+      }
+    }
+  ],
+  "sql_run": [
+    "SELECT source, currency, SUM(market) AS total_market, COUNT(*) AS rows\nFROM fct_daily_prices\nWHERE price_date = '2026-11-10' AND card_name ILIKE '%Umbreon ex%'\nGROUP BY source, currency"
+  ],
+  "results_digest": "9433858bc0c6",
+  "answer": "On the latest date (2026-11-10), Umbreon ex has a total market value of **\u20ac870.00 on Cardmarket** and **$1,500.00 on TCGplayer** (one variant each).\n\nNote: these are different currencies, so they can't be added into a single combined figure.",
+  "ms": 7094
+}

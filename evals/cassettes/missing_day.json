@@ -1,0 +1,66 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_6e9d3d5352eb44edbd80461b",
+          "name": "list_models",
+          "arguments": "{}"
+        },
+        {
+          "id": "call_5a495468c7144300a00eb32c",
+          "name": "data_freshness",
+          "arguments": "{}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 517,
+        "completion_tokens": 36
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "chatcmpl-tool-bdd53a5a1421bf97",
+          "name": "describe_model",
+          "arguments": "{\"name\": \"fct_daily_prices\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 811,
+        "completion_tokens": 15
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "chatcmpl-tool-9ddda990f6c8997f",
+          "name": "run_sql",
+          "arguments": "{\"query\": \"SELECT price_date, source, variant, currency, market, prev_market, day_change_pct FROM fct_daily_prices WHERE card_name ILIKE '%Team Rocket''s Mewtwo%' AND price_date = '2026-11-10'\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1774,
+        "completion_tokens": 60
+      }
+    },
+    {
+      "content": "**No day-on-day change can be computed** for Team Rocket's Mewtwo ex on the latest date (2026-11-10).\n\nThe only row for that card on the latest date is TCGplayer holofoil at **280.00 USD**, but there's no price for yesterday (2026-11-09) in the data, so `prev_market` and `day_change_pct` are null \u2014 the change is undefined, not zero.\n\nHow I got it: queried `fct_daily_prices` for the card on the latest price_date (2026-11-10) and found the prior-day price missing.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 1942,
+        "completion_tokens": 178
+      }
+    }
+  ],
+  "sql_run": [
+    "SELECT price_date, source, variant, currency, market, prev_market, day_change_pct FROM fct_daily_prices WHERE card_name ILIKE '%Team Rocket''s Mewtwo%' AND price_date = '2026-11-10'"
+  ],
+  "results_digest": "edba8ed0ef66",
+  "answer": "**No day-on-day change can be computed** for Team Rocket's Mewtwo ex on the latest date (2026-11-10).\n\nThe only row for that card on the latest date is TCGplayer holofoil at **280.00 USD**, but there's no price for yesterday (2026-11-09) in the data, so `prev_market` and `day_change_pct` are null \u2014 the change is undefined, not zero.\n\nHow I got it: queried `fct_daily_prices` for the card on the latest price_date (2026-11-10) and found the prior-day price missing.",
+  "ms": 11668
+}

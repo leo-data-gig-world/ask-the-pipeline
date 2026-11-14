@@ -1,0 +1,31 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_34492aa35f38466abe828c50",
+          "name": "data_freshness",
+          "arguments": "{}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 504,
+        "completion_tokens": 27
+      }
+    },
+    {
+      "content": "The data is current through **2026-11-10**, with 8 price rows recorded on that latest date.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 561,
+        "completion_tokens": 44
+      }
+    }
+  ],
+  "sql_run": [],
+  "results_digest": "97d170e1550e",
+  "answer": "The data is current through **2026-11-10**, with 8 price rows recorded on that latest date.",
+  "ms": 4548
+}

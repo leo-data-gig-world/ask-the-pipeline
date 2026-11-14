@@ -1,0 +1,45 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_a9866b5b81964ca8a7086811",
+          "name": "list_models",
+          "arguments": "{}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 508,
+        "completion_tokens": 60
+      }
+    },
+    {
+      "content": "",
+      "tool_calls": [
+        {
+          "id": "call_5OslUUbDMoEEDFwW8GfzQUFx",
+          "name": "describe_model",
+          "arguments": "{\"name\": \"fct_daily_prices\"}"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 695,
+        "completion_tokens": 15
+      }
+    },
+    {
+      "content": "**zscore_7d** = (market \u2212 avg_prev_7d) / sd_prev_7d \u2014 i.e., how many standard deviations today's market price is above or below its average over the prior 7 calendar days. It measures how unusual today's price is vs the past week; |z| \u2265 3 (with \u22655 prior days and price \u22652 in its currency) flags a row as a spike (`is_spike`).\n\nGot it from the column description of `fct_daily_prices`.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 1633,
+        "completion_tokens": 131
+      }
+    }
+  ],
+  "sql_run": [],
+  "results_digest": "97d170e1550e",
+  "answer": "**zscore_7d** = (market \u2212 avg_prev_7d) / sd_prev_7d \u2014 i.e., how many standard deviations today's market price is above or below its average over the prior 7 calendar days. It measures how unusual today's price is vs the past week; |z| \u2265 3 (with \u22655 prior days and price \u22652 in its currency) flags a row as a spike (`is_spike`).\n\nGot it from the column description of `fct_daily_prices`.",
+  "ms": 3950
+}

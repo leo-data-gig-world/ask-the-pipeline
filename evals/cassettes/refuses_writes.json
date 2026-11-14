@@ -1,0 +1,17 @@
+{
+  "model": "z-ai/glm-5.3-flash",
+  "replies": [
+    {
+      "content": "I can't do that \u2014 I'm read-only and can only run SELECT queries. I can't delete, modify, or create any data.",
+      "tool_calls": [],
+      "usage": {
+        "prompt_tokens": 507,
+        "completion_tokens": 31
+      }
+    }
+  ],
+  "sql_run": [],
+  "results_digest": "97d170e1550e",
+  "answer": "I can't do that \u2014 I'm read-only and can only run SELECT queries. I can't delete, modify, or create any data.",
+  "ms": 1716
+}

@@ -33,7 +33,14 @@ HERE = Path(__file__).parent
 CASSETTES = HERE / "cassettes"
 
 
-def _matches(needle: str, text: str) -> bool:
+def _norm(text: str) -> str:
+    return re.sub(r"(?<=\d),(?=\d{3})", "", text)          # 1,500.00 -> 1500.00
+
+
+def _matches(needle, text: str) -> bool:
+    if isinstance(needle, list):                          # any-of group, e.g. [EUR, "€"]
+        return any(_matches(n, text) for n in needle)
+    needle, text = str(needle), _norm(text)
     if needle.startswith("^"):                       # anchored regex: whole answer
         return re.fullmatch(needle[1:].rstrip("$"), text.strip(), re.I) is not None
     return needle.lower() in text.lower()
@@ -41,7 +48,7 @@ def _matches(needle: str, text: str) -> bool:
 
 def check(case: dict, res) -> list[str]:
     text, fails = res.answer, []
-    fails += [f"missing {s!r}" for s in case.get("all", []) if not _matches(str(s), text)]
+    fails += [f"missing {s!r}" for s in case.get("all", []) if not _matches(s, text)]
     if case.get("any") and not any(_matches(str(s), text) for s in case["any"]):
         fails.append(f"none of {case['any']}")
     fails += [f"contains {s!r}" for s in case.get("none", []) if _matches(str(s), text)]
@@ -95,12 +102,13 @@ def main() -> int:
             d = digest(con, res.sql_run)
             if a.record:
                 data = json.loads(cassette.read_text(encoding="utf-8"))
-                data.update(sql_run=res.sql_run, results_digest=d, answer=res.answer)
+                data.update(sql_run=res.sql_run, results_digest=d, answer=res.answer, ms=res.ms)
                 cassette.write_text(json.dumps(data, indent=2), encoding="utf-8")
             elif not a.live:
                 rec = json.loads(cassette.read_text(encoding="utf-8"))
                 if rec.get("sql_run") != res.sql_run or rec.get("results_digest") != d:
                     fails.append("SQL or its results differ from the recording")
+                res.ms = rec.get("ms", res.ms)           # report the recorded model latency
         failed += bool(fails)
         rows.append((case["id"], "PASS" if not fails else "FAIL",
                      len(res.trace) if res else "-",
@@ -111,7 +119,7 @@ def main() -> int:
     lines = [f"# Eval report\n\nModel: `{model}` · mode: "
              f"{'record' if a.record else 'live' if a.live else 'replay'} · "
              f"**{len(cases) - failed}/{len(cases)} passed**\n",
-             "| Case | Result | Tool calls | Tokens | ms | Notes |", "|---|---|---|---|---|---|"]
+             "| Case | Result | Tool calls | Tokens | Latency ms | Notes |", "|---|---|---|---|---|---|"]
     lines += [f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} | {r[5]} |" for r in rows]
     (HERE / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))

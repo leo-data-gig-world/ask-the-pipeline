@@ -1,0 +1,1 @@
+keyring  # optional: read secrets from the OS credential store on dev machines
